@@ -4,7 +4,7 @@ pipeline {
     stage('Docker Build') {
       agent any
       steps {
-        sh 'docker build -t docker_bharath/builds .'
+        sh 'docker build -t rahul155/builds .'
       }
     }
     stage('Docker Push') {
@@ -12,15 +12,15 @@ pipeline {
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
           sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-          sh 'docker push docker_bharath/builds'
+          sh 'docker push rahul155/builds'
 	}
       }
     }
     stage('Deploy New Build To Kubernetes') {
 	    agent any
 	    steps{
-		    sh 'docker push docker_bharath/builds'
-		    sh 'kubectl set image deployment/kube kube=docker_bharath/builds'
+		    sh 'docker push rahul155/builds'
+		    sh 'kubectl set image deployment/kube kube=rahul155/builds'
 	    }
       }
   }
