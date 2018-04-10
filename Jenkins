@@ -20,7 +20,7 @@ pipeline {
 	    agent any
 	    steps{
 		    sh 'docker pull rahul155/builds'
-		    sh 'kubectl delete deployments builds'
+		    //sh 'kubectl delete deployments builds'
 		    sh 'kubectl delete services builds'
 		    sh 'kubectl create deployment builds --image rahul155/builds' 
 		    sh 'kubectl set image deployments/builds builds=rahul155/builds'
