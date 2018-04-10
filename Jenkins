@@ -19,7 +19,7 @@ pipeline {
     stage('Deploy New Build To Kubernetes') {
 	    agent any
 	    steps{
-		    sh 'docker push rahul155/builds'
+		    sh 'docker push rahul155/builds:latest'
 		    sh 'kubectl set image deployment/builds builds=rahul155/builds:latest'
 	    }
       }
