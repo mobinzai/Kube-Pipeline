@@ -20,6 +20,7 @@ pipeline {
 	    agent any
 	    steps{
 		    sh 'docker push rahul155/builds:latest'
+		    sh 'docker create deployment builds --image rahul155/builds'
 		    sh 'kubectl set image deployments/builds builds=rahul155/builds:latest'
 	    }
       }
