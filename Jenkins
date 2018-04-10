@@ -21,7 +21,7 @@ pipeline {
 	    steps{
 		    sh 'docker pull rahul155/builds:latest'
 		    sh 'kubectl set image deployments/builds builds=rahul155/builds:latest'
-		    sh 'kubectl expose deployments/builds --port=90 --name=buildssvc --type=loadbalancer'
+		    sh 'kubectl create service nodeport builds --tcp=80:80'
 	    }
       }
   }
