@@ -16,17 +16,12 @@ pipeline {
 	}
       }
     }
-    stage('Deleting old builds and services') {
-	    agent any
-	    steps{
-		    sh 'kubectl delete deployments builds'
-		    sh 'kubectl delete services builds'
-	    }
-      }
     stage('Deploy New Build To Kubernetes') {
 	    agent any
 	    steps{
 		    sh 'docker pull rahul155/builds:latest'
+		    sh 'kubectl delete deployments builds'
+		    sh 'kubectl delete services builds'
 		    sh 'kubectl create deployment builds --image rahul155/builds' 
 		    sh 'kubectl set image deployments/builds builds=rahul155/builds:latest'
 		    sh 'kubectl create service nodeport builds --tcp=80:80'
