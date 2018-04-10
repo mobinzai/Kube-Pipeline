@@ -20,6 +20,7 @@ pipeline {
 	    agent any
 	    steps{
 		    sh 'docker pull rahul155/builds:latest'
+		    sh 'kubectl create builds --image rahul155/builds' 
 		    sh 'kubectl set image deployments/builds builds=rahul155/builds:latest'
 		    sh 'kubectl create service nodeport builds --tcp=80:80'
 	    }
