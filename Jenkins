@@ -12,7 +12,7 @@ pipeline {
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
           sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-          sh 'docker push rahul155/builds'
+          sh 'docker push rahul155/builds:latest'
 	}
       }
     }
@@ -20,7 +20,6 @@ pipeline {
 	    agent any
 	    steps{
 		    sh 'docker pull rahul155/builds:latest'
-		    sh 'docker create deployment builds --image rahul155/builds'
 		    sh 'kubectl set image deployments/builds builds=rahul155/builds:latest'
 	    }
       }
