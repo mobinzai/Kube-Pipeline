@@ -20,8 +20,8 @@ pipeline {
 	    agent any
 	    steps{
 		    sh 'docker pull binitalama/builds'
-		    sh 'kubectl delete deployments builds'
-		    sh 'kubectl delete services builds'
+		    //sh 'kubectl delete deployments builds'
+		    //sh 'kubectl delete services builds'
 		    sh 'kubectl create deployment builds --image binitalama/builds' 
 		    sh 'kubectl set image deployments/builds builds=binitalama/builds'
 		    sh 'kubectl create service nodeport builds --tcp=80:80'
