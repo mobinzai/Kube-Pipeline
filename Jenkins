@@ -4,7 +4,7 @@ pipeline {
     stage('Docker Build') {
       agent any
       steps {
-        sh 'docker build -t rahul155/builds .'
+        sh 'docker build -t binitalama/builds .'
       }
     }
     stage('Docker Push') {
@@ -12,18 +12,18 @@ pipeline {
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
           sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-          sh 'docker push rahul155/builds'
+          sh 'docker push binitalama/builds'
 	}
       }
     }
     stage('Deploy New Build To Kubernetes') {
 	    agent any
 	    steps{
-		    sh 'docker pull rahul155/builds'
+		    sh 'docker pull binitalama/builds'
 		    sh 'kubectl delete deployments builds'
 		    sh 'kubectl delete services builds'
-		    sh 'kubectl create deployment builds --image rahul155/builds' 
-		    sh 'kubectl set image deployments/builds builds=rahul155/builds'
+		    sh 'kubectl create deployment builds --image binitalama/builds' 
+		    sh 'kubectl set image deployments/builds builds=binitalama/builds'
 		    sh 'kubectl create service nodeport builds --tcp=80:80'
 	    }
       }
